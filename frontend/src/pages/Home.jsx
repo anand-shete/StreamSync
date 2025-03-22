@@ -5,7 +5,9 @@ function Home() {
   return (
     <>
       <Navbar />
+
       <HeroSection />
+      
       <Footer />
     </>
   );

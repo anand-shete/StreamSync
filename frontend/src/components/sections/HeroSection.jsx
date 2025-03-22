@@ -1,36 +1,26 @@
 const HeroSection = () => {
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col">
-      <div className="flex flex-col items-center p-6">
-        {/* Global Timeline */}
-        <div className="w-full text-center py-2 bg-gray-800 rounded-lg text-lg font-semibold">
-          Global Timeline: <span className="text-red-500">-03:02:45</span>
-        </div>
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col p-8">
+      {/* Border Below Navbar */}
+      <div className="border-b-2 border-gray-700 w-full mb-6"></div>
 
-        {/* Video Player Section */}
-        <div className="mt-6 flex flex-col md:flex-row gap-6 w-full max-w-6xl">
-          <div className="flex-1 bg-gray-700 p-4 rounded-lg shadow-lg flex items-center justify-center">
+      <div className="flex justify-start items-start">
+        {/* Video Player Section with Margin */}
+        <div className="bg-gray-800 p-5 rounded-lg shadow-lg w-[720px] ml-10 mt-4 border border-gray-600">
+          {/* Video Player */}
+          <div className="w-full aspect-video bg-black flex items-center justify-center rounded-lg">
             <p className="text-lg">Current Stream Is Being Played...</p>
           </div>
 
-          {/* Personalized Sequence */}
-          <div className="w-72 bg-gray-800 p-4 rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold mb-4">
-              Your Personalized Sequence
-            </h2>
-            <div className="space-y-3">
-              {[1, 2, 3, 4, 5].map((num) => (
-                <button
-                  key={num}
-                  className="flex items-center w-full p-3 bg-gray-700 rounded-lg hover:bg-gray-600"
-                >
-                  <div className="w-10 h-10 bg-gray-500 flex items-center justify-center rounded-md">
-                    ▶
-                  </div>
-                  <span className="ml-3">Video #{num}</span>
-                </button>
-              ))}
-            </div>
+          {/* Video Progress Bar */}
+          <div className="mt-4">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              defaultValue="0"
+              className="w-full cursor-pointer appearance-none bg-gray-600 h-2 rounded-lg accent-blue-500"
+            />
           </div>
         </div>
       </div>
