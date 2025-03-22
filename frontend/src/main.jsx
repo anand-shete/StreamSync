@@ -14,8 +14,8 @@ import Signup from "./pages/User/Signup";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      {/* <Route path="/" element={<Home />} /> */}
-      <Route path="/" element={<Login/>} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login/>} />
       <Route path="/signup" element={<Signup />} />
     </Route>
   )
