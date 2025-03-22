@@ -4,9 +4,10 @@ function Home() {
   return (
     <>
       <Navbar />
-      <Footer />
+      
     </>
   );
 }
 
 export default Home;
+  

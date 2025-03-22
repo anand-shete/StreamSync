@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function Footer() {
+const Footer = () => {
   return (
-    <div>
-      <h1>Footer</h1>
-    </div>
+    <footer className="bg-black text-center text-white p-4">
+      <p>© 2025 StreamSync. All rights reserved.</p>
+    </footer>
   );
-}
+};
+
+export default Footer;
