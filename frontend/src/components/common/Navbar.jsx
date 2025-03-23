@@ -1,31 +1,54 @@
-import { CiUser } from "react-icons/ci";
+import { NavLink } from "react-router";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
+  const user = useSelector((state) => state.user);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
   return (
-    <nav className="h-24 max-w-screen flex flex-row justify-between items-center bg-black text-white">
-      {/* Main logo */}
-      <h1 className="text-2xl font-bold text-blue-500">StreamSync</h1>
-
-      {/*  */}
-      <ul className="hidden md:flex md:flex-row md:space-x-10 text-lg">
-        <li className="hover:text-blue-400">Home</li>
-        <li className="hover:text-blue-400">My Channel</li>
-        <li className="hover:text-blue-400">Trending</li>
-        <li className="hover:text-blue-400">Settings</li>
-      </ul>
-
-      {/* Searchbar */}
-      <div className="flex items-center bg-gray-800 p-2">
-        <input
-          type="text"
-          placeholder="Search Stream..."
-          className="p-2 rounded-md text-white outline-none"
-        />
-        <CiUser
-          size={28}
-          className="text-white cursor-pointer hover:text-blue-400"
-        />
-      </div>
+    <nav className="h-26 max-w-screen bg-black flex flex-row items-center space-x-10">
+      <NavLink to="/">
+        <h1 className="mx-30 text-2xl text-blue-400 font-bold hover:scale-120 transition-transform">
+          StreamSync
+        </h1>
+      </NavLink>
+      {!user._id ? (
+        <>
+          <ul className="flex flex-row space-x-20">
+            <NavLink
+              to="/signup"
+              className="px-3 py-2 hover:scale-120 rounded-2xl hover:drop-shadow-lg hover:bg-blue-500  transition-all"
+            >
+              Signup
+            </NavLink>
+            <NavLink
+              to="/login"
+              className="px-3 py-2 hover:scale-120 transition-all  rounded-2xl hover:bg-blue-500"
+            >
+              Login
+            </NavLink>
+          </ul>
+        </>
+      ) : (
+        <>
+          <ul className="flex flex-row space-x-20">
+            <NavLink
+              to="/videos"
+              className="px-3 py-2 hover:scale-120 rounded-2xl hover:drop-shadow-lg hover:bg-blue-500  transition-all"
+            >
+              My Streams
+            </NavLink>
+            <NavLink
+              to="/logout"
+              className="px-3 py-2 hover:scale-120 transition-all  rounded-2xl hover:bg-blue-500"
+            >
+              Logout
+            </NavLink>
+          </ul>
+        </>
+      )}
     </nav>
   );
 };

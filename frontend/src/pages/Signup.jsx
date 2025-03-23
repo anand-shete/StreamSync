@@ -1,41 +1,36 @@
 import { useState } from "react";
-import "@/assets/User/Auth.css";
-import { Link } from "react-router";
+import "@/assets/Auth.css";
+import { Link, useNavigate } from "react-router";
+import api from "@/api";
+import { toast } from "sonner";
 
-const SignupSection = () => {
+export default function SignupSection() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Validate passwords match
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+      const res = await api.post("/signup", { name, email, password });
+      toast.success(res.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      if (error.response.status === 409) navigate("/login");
+    } finally {
+      setLoading(false);
     }
-
-    setError("");
-    setIsLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Signup attempt:", { name, email, password });
-      setIsLoading(false);
-      // Here you would handle the response from your API
-    }, 1500);
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <h2>Create Account</h2>
-          <p>Join our community today</p>
+          <h2>Sign Up</h2>
+          <p>Unlock the Ultimate Streaming Experience</p>
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
@@ -50,6 +45,7 @@ const SignupSection = () => {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your full name"
                 required
+                className="peer bg-transparent focus:outline-none autofill:bg-transparent"
               />
             </div>
           </div>
@@ -83,14 +79,13 @@ const SignupSection = () => {
               />
             </div>
           </div>
-          {error && <div className="error-message">{error}</div>}
 
           <button
             type="submit"
-            className={`auth-button ${isLoading ? "loading" : ""}`}
-            disabled={isLoading}
+            className={`auth-button ${loading ? "loading" : ""}`}
+            disabled={loading}
           >
-            {isLoading ? <span className="loading-spinner"></span> : "Sign Up"}
+            {loading ? <span className="loading-spinner"></span> : "Sign Up"}
           </button>
         </form>
 
@@ -108,6 +103,4 @@ const SignupSection = () => {
       </div>
     </div>
   );
-};
-
-export default SignupSection;
+}

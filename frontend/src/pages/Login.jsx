@@ -1,22 +1,34 @@
+import "@/assets/Auth.css";
 import { useState } from "react";
-import "@/assets/User/Auth.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import api from "@/api";
+import { setUser } from "@/features/userSlice";
+import { setVideos } from "@/features/videoSlice";
 
-const LoginSection = () => {
+export default function LoginSection() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Login attempt:", { email, password });
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      const res = await api.post("/login", { email, password });
+      const user = await api.get("/auth");
+      dispatch(setUser(user.data));
+      toast.success(res.data.message);
+      navigate("/videos");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message || "Login Failed");
+    } finally {
       setIsLoading(false);
-      // Here you would handle the response from your API
-    }, 1500);
+    }
   };
 
   return (
@@ -75,6 +87,4 @@ const LoginSection = () => {
       </div>
     </div>
   );
-};
-
-export default LoginSection;
+}
